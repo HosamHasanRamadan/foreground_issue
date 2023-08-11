@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "937258350992",
+    "project_id": "cast-tube",
+    "storage_bucket": "cast-tube.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937258350992:android:2005e90c2b6e45edde1b15",
+        "android_client_info": {
+          "package_name": "com.casttube.cast_tube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937258350992-htu1186uthajbg3v5c4dhkv7b7bhmiaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALB9y1xG3b71vchlkmhkWerDKY7n0RWVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937258350992-htu1186uthajbg3v5c4dhkv7b7bhmiaq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "937258350992-5uk4lj7fbflaov7qv2mnti24ebvhcdkn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.casttube.castTube"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937258350992:android:ba90d90ba929ee22de1b15",
+        "android_client_info": {
+          "package_name": "com.example.fb_bg_issue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937258350992-htu1186uthajbg3v5c4dhkv7b7bhmiaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALB9y1xG3b71vchlkmhkWerDKY7n0RWVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937258350992-htu1186uthajbg3v5c4dhkv7b7bhmiaq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "937258350992-5uk4lj7fbflaov7qv2mnti24ebvhcdkn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.casttube.castTube"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

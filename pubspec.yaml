@@ -1,0 +1,26 @@
+name: fb_bg_issue
+description: A new Flutter project.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.0.6 <4.0.0"
+
+dependencies:
+  async: ^2.11.0
+  firebase_auth: ^4.7.2
+  firebase_core: ^2.15.0
+  firebase_storage: ^11.2.5
+  flutter:
+    sdk: flutter
+  flutter_background_service: ^4.0.0
+  flutter_local_notifications: ^15.1.0+1
+  path_provider: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
