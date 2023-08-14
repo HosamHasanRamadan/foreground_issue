@@ -38,6 +38,12 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  Future<String> get _filePath async {
+    final appFolder = await getExternalStorageDirectory();
+    // TODO: replace with target file for uploading
+    return '${appFolder!.absolute.path}/app-tester.apk';
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,18 +60,28 @@ class _MainAppState extends State<MainApp> {
               ),
               TextButton(
                 onPressed: () async {
-                  setState(() {});
-                  final appFolder = await getExternalStorageDirectory();
-                  // TODO: replace with target file for uploading
-                  final filePath = '${appFolder!.absolute.path}/app-tester.apk';
+                  final path = await _filePath;
                   FlutterBackgroundService().invoke(
                     'upload',
                     {
-                      'file': filePath,
+                      'file': path,
                     },
                   );
                 },
                 child: const Text('Upload'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final path = await _filePath;
+                  FlutterBackgroundService().invoke(
+                    'upload',
+                    {
+                      'file': path,
+                      'delayed': true,
+                    },
+                  );
+                },
+                child: const Text('Delayed Upload'),
               ),
               TextButton(
                 onPressed: () {
@@ -93,26 +109,14 @@ Future<void> onStart(ServiceInstance serviceInstance) async {
   serviceInstance.on('upload').listen((event) async {
     print('upload');
     final file = File(event!['file'] as String);
-    final randomValue = DateTime.now().millisecondsSinceEpoch;
-    final uploadTask = storage.ref('$randomValue').putFile(file);
-    uploadTask.snapshotEvents.map((task) {
-      switch (task.state) {
-        case TaskState.paused:
-        case TaskState.running:
-          return 100.0 * (task.bytesTransferred / task.totalBytes);
-        case TaskState.success:
-          return 100;
-        case TaskState.canceled:
-        case TaskState.error:
-          return -1;
-      }
-    }).listen(
-      (event) {
-        print('progress: $event');
-        if (event == 100) serviceInstance.stopSelf();
-      },
-      cancelOnError: true,
-    );
+    final delayed = event['delayed'] as bool?;
+    if (delayed == true) {
+      Future.delayed(const Duration(seconds: 10)).then((value) {
+        upload(storage, file, serviceInstance);
+      });
+      return;
+    }
+    upload(storage, file, serviceInstance);
   });
 
   serviceInstance.on('stop').listen((event) {
@@ -125,5 +129,32 @@ Future<void> onStart(ServiceInstance serviceInstance) async {
     (timer) {
       print('${timer.tick}: Background service alive');
     },
+  );
+}
+
+void upload(
+  FirebaseStorage storage,
+  File file,
+  ServiceInstance serviceInstance,
+) {
+  final randomValue = DateTime.now().millisecondsSinceEpoch;
+  final uploadTask = storage.ref('$randomValue').putFile(file);
+  uploadTask.snapshotEvents.map((task) {
+    switch (task.state) {
+      case TaskState.paused:
+      case TaskState.running:
+        return 100.0 * (task.bytesTransferred / task.totalBytes);
+      case TaskState.success:
+        return 100;
+      case TaskState.canceled:
+      case TaskState.error:
+        return -1;
+    }
+  }).listen(
+    (event) {
+      print('progress: $event');
+      if (event == 100) serviceInstance.stopSelf();
+    },
+    cancelOnError: true,
   );
 }
